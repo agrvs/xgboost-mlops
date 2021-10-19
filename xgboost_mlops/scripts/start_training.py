@@ -11,7 +11,7 @@ role = os.getenv('ROLE')
 print(f"bucket: {bucket}")
 # parameter_store
 
-prefix = "sagemaker/xgboost-demo/data"
+prefix = "xgboost-demo/data"
 output_prefix = "output"
 container = sagemaker.image_uris.retrieve("xgboost", region, "1.3-1")
 

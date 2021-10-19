@@ -40,6 +40,7 @@ class TrainingPipelineStack(cdk.Stack):
         dev_app = TrainingStage(self, 'dev')
         dev_pipeline = training_pipeline.add_application_stage(dev_app)
 
+        # UploadData
         dev_pipeline.add_actions(pipelines.ShellScriptAction(
             action_name="UploadData",
             run_order=dev_pipeline.next_sequential_run_order(),
@@ -61,6 +62,7 @@ class TrainingPipelineStack(cdk.Stack):
             }
         ))
 
+        # StartTraining
         dev_pipeline.add_actions(pipelines.ShellScriptAction(
             action_name="StartTraining",
             run_order=dev_pipeline.next_sequential_run_order(),
@@ -115,6 +117,7 @@ class HostingPipelineStack(cdk.Stack):
         dev_app = HostingStage(self, 'dev')
         dev_pipeline = hosting_pipeline.add_application_stage(dev_app)
 
+        # Hosting
         dev_pipeline.add_actions(pipelines.ShellScriptAction(
             action_name="Hosting",
             run_order=dev_pipeline.next_sequential_run_order(),
