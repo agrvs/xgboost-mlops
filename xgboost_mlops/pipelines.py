@@ -1,7 +1,10 @@
-from aws_cdk import core as cdk
-from aws_cdk import aws_codepipeline as aws_pipeline
-from aws_cdk import aws_codepipeline_actions as aws_pipeline_actions
-from aws_cdk import pipelines
+from aws_cdk import(
+    core as cdk,
+    aws_codepipeline as aws_pipeline,
+    aws_codepipeline_actions as aws_pipeline_actions,
+    aws_iam as iam,
+    pipelines
+)
 from stages import HostingStage, TrainingStage
 
 
@@ -33,6 +36,30 @@ class TrainingPipelineStack(cdk.Stack):
                 synth_command="cdk synth TrainingPipelineStack"
             )
         )
+
+        dev_app = TrainingStage(self, 'dev')
+        dev_pipeline = training_pipeline.add_application_stage(dev_app)
+
+        dev_pipeline.add_actions(pipelines.ShellScriptAction(
+            action_name="UploadData",
+            run_order=dev_pipeline.next_sequential_run_order(),
+            additional_artifacts=[source_artifact],
+            commands=[
+                "pip install boto3 sagemaker",
+                "python3 xgboost_mlops/scripts/upload_data.py"
+            ],
+            role_policy_statements=[
+                iam.PolicyStatement(
+                    sid="UploadDataPolicy",
+                    effect=iam.Effect.ALLOW,
+                    actions=["*"],
+                    resources=["*"]
+                )
+            ],
+            use_outputs={
+                "BUCKET": training_pipeline.stack_output(dev_app.bucket_name)
+            }
+        ))
 
 
 class HostingPipelineStack(cdk.Stack):
