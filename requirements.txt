@@ -1,0 +1,9 @@
+-e .
+# cdk resources
+aws_cdk.aws_codepipeline
+aws_cdk.aws_codepipeline_actions
+aws_cdk.pipelines
+aws_cdk.aws_sagemaker
+
+# aws sdk
+sagemaker
