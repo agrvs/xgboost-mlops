@@ -16,7 +16,7 @@ class PlatformStack(cdk.Stack):
 
         role = iam.Role(self,
             "sagemaker-training-full",
-            role_name="TrainingRole",
+            role_name="PlatformRole",
             assumed_by=iam.ServicePrincipal('sagemaker.amazonaws.com'),
             managed_policies=[
                 iam.ManagedPolicy.from_aws_managed_policy_name('AmazonSageMakerFullAccess')
