@@ -1,7 +1,8 @@
 from aws_cdk import (
     core as cdk,
     aws_iam as iam,
-    aws_s3 as s3
+    aws_s3 as s3,
+    aws_sagemaker as sm
 )
 
 
@@ -57,4 +58,21 @@ class HostingStack(cdk.Stack):
             role_name="HostingRole",
             assumed_by=iam.ServicePrincipal('sagemaker.amazonaws.com'),
             managed_policies=[iam.ManagedPolicy.from_aws_managed_policy_name('AmazonSageMakerFullAccess')]
+        )
+
+        # model = sm.CfnModel(self,
+        #     "model",
+        #     execution_role_arn=role.role_arn,
+        #     model_name="XgboostModel",
+        #     primary_container={
+        #         'image': '246618743249.dkr.ecr.us-west-2.amazonaws.com/sagemaker-xgboost:1.3-1'
+        #     }
+        # ).ContainerDefinitionProperty(
+        #     model_data_url=""
+        # )
+
+        # Output
+        self.role_arn = cdk.CfnOutput(self,
+            "RoleArn",
+            value=role.role_arn
         )

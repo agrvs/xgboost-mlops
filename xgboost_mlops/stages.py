@@ -20,3 +20,4 @@ class HostingStage(cdk.Stage):
         hosting = HostingStack(self, "HostingStack")
 
         # Outputs
+        self.role_arn = hosting.role_arn
