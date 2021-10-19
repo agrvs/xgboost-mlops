@@ -3,7 +3,6 @@ from aws_cdk import(
     aws_codepipeline as aws_pipeline,
     aws_codepipeline_actions as aws_pipeline_actions,
     aws_iam as iam,
-    aws_ssm as ssm,
     pipelines
 )
 from stages import HostingStage, TrainingStage
@@ -96,21 +95,22 @@ class HostingPipelineStack(cdk.Stack):
         dev_pipeline = hosting_pipeline.add_application_stage(dev_app)
 
         dev_pipeline.add_actions(pipelines.ShellScriptAction(
-            action_name="HelloWorld",
+            action_name="Hosting",
             run_order=dev_pipeline.next_sequential_run_order(),
             additional_artifacts=[source_artifact],
             commands=[
-                # 'pip install boto3 sagemaker',
+                # "pip install boto3 sagemaker",
                 "echo 'Hello World'"
             ],
             role_policy_statements=[
                 iam.PolicyStatement(
-                    sid='PipelinePolicy',
+                    sid="HostingPolicy",
                     effect=iam.Effect.ALLOW,
-                    actions=['*'],
-                    resources=['*']
-            )],
-            # use_outputs={
-            #     "BUCKET": dev_pipeline.stack_output(dev_app.bucket_name)
-            # }
+                    actions=["*"],
+                    resources=["*"]
+                )
+            ],
+            use_outputs={
+                "ROLE_ARN": hosting_pipeline.stack_output(dev_app.role_arn)
+            }
         ))

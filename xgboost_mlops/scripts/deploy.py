@@ -4,8 +4,8 @@ from datetime import datetime
 import boto3, os
 
 # role = get_execution_role()
-role = os.getenv('ROLE')
-print(f"bucket: {bucket}")
+role = os.getenv('ROLE_ARN')
+print(f"ROLE: {role}")
 
 model_variant = production_variant(
     model_name="TestModel4",
