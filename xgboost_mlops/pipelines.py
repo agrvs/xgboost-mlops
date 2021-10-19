@@ -110,7 +110,7 @@ class HostingPipelineStack(cdk.Stack):
                     actions=['*'],
                     resources=['*']
             )],
-            use_outputs={
-                "BUCKET": dev_pipeline.stack_output(dev_app.bucket_name)
-            }
+            # use_outputs={
+            #     "BUCKET": dev_pipeline.stack_output(dev_app.bucket_name)
+            # }
         ))
