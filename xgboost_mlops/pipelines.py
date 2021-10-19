@@ -30,7 +30,7 @@ class TrainingPipelineStack(cdk.Stack):
                 source_artifact=source_artifact,
                 cloud_assembly_artifact=cloud_assembly_artifact,
                 install_command="npm install -g aws-cdk && pip install -r requirements.txt",
-                synth_command="cdk synth"
+                synth_command="cdk synth TrainingPipelineStack"
             )
         )
 
@@ -60,6 +60,6 @@ class HostingPipelineStack(cdk.Stack):
                 source_artifact=source_artifact,
                 cloud_assembly_artifact=cloud_assembly_artifact,
                 install_command="npm install -g aws-cdk && pip install -r requirements.txt",
-                synth_command="cdk synth"
+                synth_command="cdk synth HostingPipelineStack"
             )
         )
