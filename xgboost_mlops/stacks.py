@@ -57,7 +57,9 @@ class HostingStack(cdk.Stack):
             'sagemaker-full',
             role_name="HostingRole",
             assumed_by=iam.ServicePrincipal('sagemaker.amazonaws.com'),
-            managed_policies=[iam.ManagedPolicy.from_aws_managed_policy_name('AmazonSageMakerFullAccess')]
+            managed_policies=[
+                iam.ManagedPolicy.from_aws_managed_policy_name('AmazonSageMakerFullAccess')
+            ]
         )
 
         model = sm.CfnModel(self,
