@@ -63,26 +63,26 @@ class TrainingPipelineStack(cdk.Stack):
         ))
 
         # StartTraining
-        # dev_pipeline.add_actions(pipelines.ShellScriptAction(
-        #     action_name="StartTraining",
-        #     run_order=dev_pipeline.next_sequential_run_order(),
-        #     additional_artifacts=[source_artifact],
-        #     commands=[
-        #         'pip install boto3 sagemaker',
-        #         'python3 xgboost_mlops/scripts/start_training.py'
-        #     ],
-        #     role_policy_statements=[
-        #         iam.PolicyStatement(
-        #             sid='PipelinePolicy',
-        #             effect=iam.Effect.ALLOW,
-        #             actions=['*'],
-        #             resources=['*']
-        #     )],
-        #     use_outputs={
-        #         'BUCKET': training_pipeline.stack_output(dev_app.bucket_name),
-        #         'ROLE': training_pipeline.stack_output(dev_app.role_arn)
-        #     }
-        # ))
+        dev_pipeline.add_actions(pipelines.ShellScriptAction(
+            action_name="StartTraining",
+            run_order=dev_pipeline.next_sequential_run_order(),
+            additional_artifacts=[source_artifact],
+            commands=[
+                'pip install boto3 sagemaker',
+                'python3 xgboost_mlops/scripts/start_training.py'
+            ],
+            role_policy_statements=[
+                iam.PolicyStatement(
+                    sid='PipelinePolicy',
+                    effect=iam.Effect.ALLOW,
+                    actions=['*'],
+                    resources=['*']
+            )],
+            use_outputs={
+                'BUCKET': training_pipeline.stack_output(dev_app.bucket_name),
+                'ROLE': training_pipeline.stack_output(dev_app.role_arn)
+            }
+        ))
 
 
 class HostingPipelineStack(cdk.Stack):
