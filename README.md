@@ -4,7 +4,7 @@
 This is the code for a presentation on using Sagemaker with the AWS CDK.
 It builds a self-modifying MLOps pipeline that trains and deploys an xgboost model.
 
-
+---
 
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
